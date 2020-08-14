@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  # remember_token という仮想の属性を作成
+  attr_accessor :remember_token
   before_save { self.email = email.downcase }
   
   validates :name, presence: true, length: { maximum: 50 }
@@ -24,5 +26,16 @@ class User < ApplicationRecord
   # ランダムなトークンを返す
   def User.new_token
     SecureRandom.urlsafe_base64
+  end
+  
+  # 永続的セッションの為ハッシュ化したトークンをデータベースに記憶
+  def remember
+    self.remember_token = User.new_token
+    update_attribute(:remember_digest, User.digest(remember_token))
+  end
+  
+  # トークンがダイジェストと一致すればtrueを返す
+  def authenticated?(remember_token)
+    BCrypt::Passeord.new(remember_digest).is_password?(remember_token)
   end
 end
