@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user, only: [:show, :edit, :updaate, :destroy]
-  before_action :correct_user, only: [:index, :edit, :update]
-  before_action :admin_user, only: :destroy
+  before_action :correct_user, only: [:edit, :update]
+  before_action :admin_user, only: [:index, :destroy]
   
   
   def index
@@ -73,6 +73,6 @@ class UsersController < ApplicationController
     
     # システム管理権限所有かどうか判定
     def admin_user
-      rederect_to root_url unless current_user.admin?
+      redirect_to root_url unless current_user.admin?
     end
 end
