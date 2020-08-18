@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   
   resources :users do
     member do
-      det 'edit_basic_info'
+      get 'edit_basic_info'
       patch 'update_basic_info'
     end
   end
