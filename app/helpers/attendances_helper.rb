@@ -14,4 +14,13 @@ module AttendancesHelper
   def working_times(start, finish)
     format("%.2f", (((finish - start) / 60) / 60.0))
   end
+  
+  # 15分単位で時間を丸める
+  def round_s(start)
+    start.floor_to(15.minutes)
+  end
+  
+  def round_f(finish)
+    finish.floor_to(15.minutes)
+  end
 end
