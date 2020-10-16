@@ -9,13 +9,14 @@
       <td><%= link_to "︎◀︎", user_path(date: @first_day.prev_month), class:"btn btn-primary"%>
           <%= l(@first_day, format: :middle) %>   時間管理表   <%= link_to "▶︎", user_path(date: @first_day.next_month),
           class: "btn btn-primary" %>
+          
       </td>
       <td>指定勤務時間 : <%= format_basic_info(@user.work_time) %></td>
       <td>基本時間 : <%= format_basic_info(@user.basic_time) %></td>
       <td></td>
       <td>初日：<%= l(@first_day, format: :short) %></td>
     </tr>
-
+    
     <tr>
       <td>所属 : <%= @user.department.present? ? @user.department : "未所属" %></td>
       <td>名前 : <%= @user.name %></td>
@@ -31,6 +32,8 @@
 <div>
   <table class="table table-bordered table-condensed table-hover" id="table-attendances">
     <thead>
+      
+      <%= link_to "1ヶ月の勤怠編集へ", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-primary" %>
       <tr>
         <th>日付</th>
         <th>曜日</th>
