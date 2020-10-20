@@ -1,5 +1,5 @@
 class AttendancesController < ApplicationController
-  before_action :set_user, only: :edit_one_month
+  before_action :set_user, only: [:edit_one_month, :update_one_month]
   before_action :logged_in_user, only: [:update, :edit_one_month]
   before_action :admin_or_correct_user, only: [:update, :edit_one_month, :update_one_month]
   before_action :set_one_month, only: :edit_one_month
@@ -32,8 +32,14 @@ class AttendancesController < ApplicationController
   def update_one_month
     ActiveRecord::Base.transaction do # トランザクションを開始します。
       attendances_params.each do |id, item|
-        atttendance = Attendance.find(id)
-        atttendance.update_attributes!(item)
+      attendance = Attendance.find(id)
+        # 退勤時間を保存する時は出勤時間が存在しなければならない
+        if item[:started_at].present? && item[:finished_at].blank?
+        flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+        redirect_to attendances_edit_one_month_user_url(date: params[:date]) and return
+        end
+        
+        attendance.update_attributes!(item)
       end
     end
     flash[:success] = "1ヶ月分の勤怠情報を更新しました。"
