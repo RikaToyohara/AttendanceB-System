@@ -11,17 +11,12 @@
         <th>退勤時間</th>
         <th>在社時間</th>
         <th>備考</th>
-<<<<<<< HEAD
-=======
-        <th>残業指示</th>
-        <th>指示者</th>
->>>>>>> 7ae4e1aef8ec521bd44a72cb6f7045392a161b7e
+
       </tr>
     </thead>
     <tbody>
       <% @attendances.each do |day| %>
         <%= f.fields_for "attendances[]", day do |attendance| %>
-<<<<<<< HEAD
         <tr>
           <td><%= l(day.worked_on, format: :short) %></td>
           <% css_class = 
@@ -48,27 +43,6 @@
           </td>
           <td><%= attendance.text_field :note, class: "form-control" %></td>
         </tr>
-=======
-          <tr>
-            <td><%= l(day.worked_on, format: :short) %></td>
-            <td><%= $days_of_the_week[day.worked_on.wday] %></td>
-            <% if logged_in? && (Date.current < day.worked_on) %>
-              <td><%= attendance.time_field :started_at, readonly: true, class: "form-control" %></td>
-              <td><%= attendance.time_field :finished_at, readonly: true, class: "form-control" %></td>
-            <% else %>
-              <td><%= attendance.time_field :started_at, class: "form-control" %></td>
-              <td><%= attendance.time_field :finished_at, class: "form-control" %></td>
-            <% end %>
-            <td>
-              <% if day.started_at.present? && day.finished_at.present? %>
-                <%= working_times(day.started_at, day.finished_at) %>
-              <% end %>
-            </td>
-            <td><%= attendance.text_field :note, class: "form-control" %></td>
-            <td></td>
-            <td></td>
-            </tr>
->>>>>>> 7ae4e1aef8ec521bd44a72cb6f7045392a161b7e
         <% end %>
       <% end %>
     </tbody>
@@ -76,12 +50,7 @@
 </div>
 
 <div class="center">
-<<<<<<< HEAD
   <%= f.submit "まとめて更新", class: "btn btn-lg btn-primary" %>
   <%= link_to "キャンセル", user_path(date: @first_day), class: "btn btn-lg btn-default" %>
-=======
-  <%= link_to "キャンセル", user_path(date: @first_day), class: "btn btn-lg btn-default" %>
-  <%= f.submit "編集を保存する", class: "btn btn-lg btn-primary" %>
->>>>>>> 7ae4e1aef8ec521bd44a72cb6f7045392a161b7e
 </div>
 <% end %>
